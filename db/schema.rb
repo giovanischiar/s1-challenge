@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171021192813) do
+ActiveRecord::Schema.define(version: 20171021203257) do
 
   create_table "books", force: :cascade do |t|
     t.string "title"
@@ -20,6 +20,22 @@ ActiveRecord::Schema.define(version: 20171021192813) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "configurations", force: :cascade do |t|
+    t.string "label"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "ordenations", force: :cascade do |t|
+    t.integer "priority"
+    t.string "field"
+    t.string "direction"
+    t.integer "configuration_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["configuration_id"], name: "index_ordenations_on_configuration_id"
   end
 
 end
