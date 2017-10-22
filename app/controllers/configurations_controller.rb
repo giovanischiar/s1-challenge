@@ -24,7 +24,7 @@ class ConfigurationsController < ApplicationController
   # POST /configurations
   # POST /configurations.json
   def create
-    @configuration = Configuration.new(configuration_params)
+    @configuration = ApplicationRecord::Configuration.new(configuration_params)
 
     respond_to do |format|
       if @configuration.save
@@ -69,6 +69,6 @@ class ConfigurationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def configuration_params
-      params.require(:configuration).permit(:label)
+      params.require(:configuration).permit(:label, :configuration_file)
     end
 end

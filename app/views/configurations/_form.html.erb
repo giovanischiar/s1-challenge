@@ -1,5 +1,6 @@
-<%= simple_form_for @configuration, :html => { :class => "form-horizontal" } do |f| %>
+<%= simple_form_for @configuration do |f| %>
   <%= f.input :label %>
+  <%= f.input :configuration_file, as: :file %>
   <%= f.button :submit %>
 
 <% end %>
