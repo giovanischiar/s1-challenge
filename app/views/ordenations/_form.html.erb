@@ -1,48 +1,7 @@
-<%= form_for [@configuration, @ordenation], :html => { :class => "form-horizontal ordenation" } do |f| %>
-
-  <% if @ordenation.errors.any? %>
-    <div id="error_expl" class="panel panel-danger">
-      <div class="panel-heading">
-        <h3 class="panel-title"><%= pluralize(@ordenation.errors.count, "error") %> prohibited this ordenation from being saved:</h3>
-      </div>
-      <div class="panel-body">
-        <ul>
-        <% @ordenation.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-        </ul>
-      </div>
-    </div>
-  <% end %>
-
-  <div class="form-group">
-    <%= f.label :priority, :class => 'control-label col-lg-2' %>
-    <div class="col-lg-10">
-      <%= f.text_field :priority, :class => 'form-control' %>
-    </div>
-    <%=f.error_span(:priority) %>
-  </div>
-  <div class="form-group">
-    <%= f.label :field, :class => 'control-label col-lg-2' %>
-    <div class="col-lg-10">
-      <%= f.text_field :field, :class => 'form-control' %>
-    </div>
-    <%=f.error_span(:field) %>
-  </div>
-  <div class="form-group">
-    <%= f.label :direction, :class => 'control-label col-lg-2' %>
-    <div class="col-lg-10">
-      <%= f.text_field :direction, :class => 'form-control' %>
-    </div>
-    <%=f.error_span(:direction) %>
-  </div>
-
-  <div class="form-group">
-    <div class="col-lg-offset-2 col-lg-10">
-      <%= f.submit nil, :class => 'btn btn-primary' %>
-      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                configuration_ordenations_path(@configuration), :class => 'btn btn-default' %>
-    </div>
-  </div>
+<%= simple_form_for [@configuration, @ordenation], html: { class: 'form-horizontal' } do |f| %>
+  <%= f.input :priority %>
+  <%= f.input :field %>
+  <%= f.input :direction %>
+  <%= f.button :submit %>
 
 <% end %>
