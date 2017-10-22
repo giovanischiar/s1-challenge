@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  priority: 1
+  field: MyString
+  direction: MyString
+  configuration: one
+
+two:
+  priority: 1
+  field: MyString
+  direction: MyString
+  configuration: two
