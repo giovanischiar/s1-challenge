@@ -41,8 +41,8 @@
 
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
-            configurations_path, :class => 'btn btn-default' %>
-            
+            url_for(:back), :class => 'btn btn-default' %>
+
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_configuration_ordenation_path(@configuration),
             :class => 'btn btn-primary' %>
