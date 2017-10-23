@@ -29,14 +29,13 @@ class Configuration < ApplicationRecord
     json_parsed.each do |ordenation_dict|
       if ordenation_dict.keys != ["field", "direction"]
          errors.add(:configuration_file, ("Json not corresponding to ordenation"))
-       end
+      else
         order = Ordenation.new(ordenation_dict)
-        order["configuration_id"] = 1
-
-       if ordenation_dict.keys == ["field", "direction"] && !order.valid?
-         puts "-> wtf: #{order.errors.inspect}"
-         errors.add(:configuration_file, ("Invalid ordenation"))
-       end
+        unless order.is_valid_without_config?
+          puts "-> wtf: #{order.errors.inspect}"
+          errors.add(:configuration_file, ("Invalid ordenation"))
+        end
+      end
     end
 
     rescue JSON::ParserError => e 
