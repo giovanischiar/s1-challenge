@@ -41,7 +41,7 @@ gem 'twitter-bootstrap-rails'
 
 gem 'simple_form'
 
-gem 'json'
+gem 'json', '~> 1.8.5'
 
 gem 'config'
 

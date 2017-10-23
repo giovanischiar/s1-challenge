@@ -5,7 +5,7 @@
 
 * Database creation/initialization:
 
-rails db:create
+rails db:create &&
 rails db:migrate
 
 There's a default books list. To fill the db with them type:
@@ -13,13 +13,14 @@ There's a default books list. To fill the db with them type:
 rails db:seed
 
 * Usage:
-
+bundle install &&
 rails s
 
 Open browser and type localhost:3000 or in a browser in local ethernet device type <ip>:3000 to open the application
 
 * Example of config file to config ordenation params:
 
+```javascript
 [
   {
     "field":"edition_year",
@@ -34,6 +35,7 @@ Open browser and type localhost:3000 or in a browser in local ethernet device ty
     "direction":"asc"
   }
 ]
+```
 
 * Project decisions
 
