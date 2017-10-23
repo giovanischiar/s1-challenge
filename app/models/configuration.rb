@@ -4,15 +4,51 @@ require 'json'
 class Configuration < ApplicationRecord
 	has_many :ordenations
   attr_accessor :configuration_file
+  validates :label, presence: true
+  validates :configuration_file, presence: true
   before_save :associate_ordenations
+  validate :json_file_has_to_be_valid
 
   def configuration_file?
     !!@configuration_file
   end
 
-  private
+  def json_file_has_to_be_valid
+    if @configuration_file.nil?
+      errors.add(:configuration_file, ("Choose a json file")) 
+      return
+    end
 
+    file = @configuration_file.open
+    content = file.read
+    json_parsed = JSON.parse content
+    if json_parsed.empty?
+      errors.add(:configuration_file, ("Empty json")) 
+    end
+
+    json_parsed.each do |ordenation_dict|
+      if ordenation_dict.keys != ["field", "direction"]
+         errors.add(:configuration_file, ("Json not corresponding to ordenation"))
+       end
+        order = Ordenation.new(ordenation_dict)
+        order["configuration_id"] = 1
+
+       if ordenation_dict.keys == ["field", "direction"] && !order.valid?
+         puts "-> wtf: #{order.errors.inspect}"
+         errors.add(:configuration_file, ("Invalid ordenation"))
+       end
+    end
+
+    rescue JSON::ParserError => e 
+      errors.add(:configuration_file, ("Invalid json")) 
+  end
+
+  private
     def associate_ordenations
+      if @configuration_file.nil?
+        return
+      end
+
       file = @configuration_file.open
       content = file.read
       json_parsed = JSON.parse content

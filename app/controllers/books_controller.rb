@@ -1,10 +1,11 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
+  before_action :set_configurations, only: [:index]
 
   # GET /books
   # GET /books.json
   def index
-    @books = Book.all
+    @books = get_books_sorted
   end
 
   # GET /books/1
@@ -61,7 +62,34 @@ class BooksController < ApplicationController
     end
   end
 
+  def sort
+    cookies[:sort_config] = params['configuration']
+    redirect_to :books
+  end
+
   private
+    def set_configurations
+      @configurations = ApplicationRecord::Configuration.all
+    end
+
+    def get_books_sorted
+      if cookies[:sort_config].nil? || cookies[:sort_config] == "None"
+        return Book.all
+      end
+
+      @current_configuration = ApplicationRecord::Configuration.where(label: cookies[:sort_config]).first
+
+      if @current_configuration.nil?
+        return Book.all
+      end
+
+      string_config = @current_configuration.ordenations.map do |ordenation|
+        "#{ordenation.field} #{ordenation.direction}"
+      end
+
+      Book.order(string_config)
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_book
       @book = Book.find(params[:id])

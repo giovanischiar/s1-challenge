@@ -2,6 +2,22 @@
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
+
+<label>Current sorting ordenation:</label> 
+<select id="sorting-options" class="combobox">
+  <option <%= if @current_configuration.nil? then "selected" end%>>None</option>
+  <% @configurations.each do |configuration| %>
+      <option value=<%= configuration.label %> 
+        <%= if !@current_configuration.nil? && @current_configuration.label == configuration.label then "selected" end%>>
+        <%= configuration.label %>
+      </option>
+  <% end %>
+</select>
+<button id="sorting-button" class='btn btn-default'>Sort</button>
+<%= link_to "Manage sorting configurations",
+            configurations_path,
+            :class => 'btn btn-primary' %>
+
 <table class="table table-striped">
   <thead>
     <tr>
